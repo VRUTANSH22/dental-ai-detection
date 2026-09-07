@@ -1,0 +1,215 @@
+{
+  "Calculus": {
+    "description": "Calculus (dental tartar) is hardened dental plaque that has calcified on the surfaces of teeth. It forms when mineral salts from saliva combine with plaque bacteria, creating a rock-hard deposit that cannot be removed by brushing alone.",
+    "symptoms": [
+      "Yellow or brown deposits on teeth near the gum line",
+      "Rough or gritty texture on tooth surfaces",
+      "Persistent bad breath (halitosis)",
+      "Swollen, red, or bleeding gums",
+      "Receding gum line"
+    ],
+    "causes": [
+      "Poor oral hygiene and infrequent brushing",
+      "High mineral content in saliva",
+      "Consuming sugary or starchy foods frequently",
+      "Dry mouth (reduced saliva flow)",
+      "Smoking or tobacco use"
+    ],
+    "prevention": [
+      "Brush teeth at least twice daily with fluoride toothpaste",
+      "Floss daily to remove plaque between teeth",
+      "Use an antiseptic mouthwash regularly",
+      "Visit a dentist every 6 months for professional cleaning",
+      "Reduce sugar and starch intake",
+      "Drink plenty of water throughout the day"
+    ],
+    "treatment": [
+      "Professional dental scaling and root planing",
+      "Ultrasonic scaling devices used by dentists",
+      "Air polishing for mild deposits",
+      "Improved home oral hygiene regimen",
+      "Prescription antimicrobial mouthwash in severe cases"
+    ],
+    "severity": "Moderate",
+    "color": "#F59E0B",
+    "icon": "tooth"
+  },
+  "Caries": {
+    "description": "Dental caries (tooth decay) is a bacterial disease that destroys the hard tissues of the tooth — enamel, dentine, and cementum. It is one of the most prevalent chronic diseases worldwide, caused by acid produced by bacteria that ferment dietary sugars.",
+    "symptoms": [
+      "Toothache or spontaneous tooth pain",
+      "Tooth sensitivity to hot, cold, or sweet foods",
+      "Visible holes or pits in teeth",
+      "Brown, black, or white staining on tooth surfaces",
+      "Pain when biting down"
+    ],
+    "causes": [
+      "Bacteria (Streptococcus mutans) producing acids",
+      "Frequent consumption of sugary or acidic foods and drinks",
+      "Poor oral hygiene — inadequate brushing and flossing",
+      "Dry mouth reducing saliva's protective effect",
+      "Deep tooth grooves that trap food particles"
+    ],
+    "prevention": [
+      "Brush twice daily with fluoride toothpaste",
+      "Floss between teeth daily",
+      "Limit sugary snacks and acidic beverages",
+      "Use dental sealants on molars",
+      "Regular dental check-ups and fluoride treatments",
+      "Drink fluoridated water"
+    ],
+    "treatment": [
+      "Fluoride treatments for early-stage caries",
+      "Dental fillings (composite resin, amalgam)",
+      "Crowns for extensively damaged teeth",
+      "Root canal treatment for infection reaching pulp",
+      "Tooth extraction as a last resort"
+    ],
+    "severity": "High",
+    "color": "#EF4444",
+    "icon": "alert-triangle"
+  },
+  "Gingivitis": {
+    "description": "Gingivitis is inflammation of the gums (gingiva) caused by bacterial plaque accumulation at the gum line. It is the earliest stage of gum disease and is reversible with proper treatment and improved oral hygiene.",
+    "symptoms": [
+      "Red, swollen, or puffy gums",
+      "Gums that bleed easily during brushing or flossing",
+      "Bad breath (halitosis)",
+      "Receding gums",
+      "Tender gums when touched"
+    ],
+    "causes": [
+      "Plaque buildup on teeth and gum line",
+      "Poor oral hygiene habits",
+      "Hormonal changes (pregnancy, puberty, menopause)",
+      "Certain medications that affect gum tissue",
+      "Nutritional deficiencies (especially Vitamin C)",
+      "Smoking or tobacco use"
+    ],
+    "prevention": [
+      "Brush teeth gently twice daily",
+      "Floss between teeth every day",
+      "Use antiseptic mouthwash",
+      "Regular professional dental cleanings",
+      "Avoid tobacco products",
+      "Maintain a balanced diet rich in vitamins"
+    ],
+    "treatment": [
+      "Professional dental cleaning (scaling)",
+      "Improved brushing and flossing technique",
+      "Antiseptic mouthwash (chlorhexidine)",
+      "Addressing underlying causes (medications, hormones)",
+      "Vitamin C supplementation if deficient"
+    ],
+    "severity": "Mild to Moderate",
+    "color": "#10B981",
+    "icon": "heart"
+  },
+  "Tooth Discoloration": {
+    "description": "Tooth discoloration refers to staining, yellowing, or abnormal pigmentation of the teeth. It can affect the outer surface (extrinsic) or be embedded within the tooth structure (intrinsic), and ranges from minor cosmetic concerns to indicators of systemic conditions.",
+    "symptoms": [
+      "Yellowing or browning of tooth surfaces",
+      "White spots or streaks on enamel",
+      "Grey or dark patches on teeth",
+      "Uneven coloring across different teeth",
+      "Surface stains that do not respond to brushing"
+    ],
+    "causes": [
+      "Consumption of staining foods and drinks (coffee, tea, red wine)",
+      "Tobacco smoking or chewing",
+      "Poor oral hygiene allowing plaque and tartar buildup",
+      "Certain medications (tetracycline antibiotics in children)",
+      "Excessive fluoride during tooth development (fluorosis)",
+      "Aging — natural thinning of enamel revealing yellow dentin",
+      "Trauma or injury to the tooth"
+    ],
+    "prevention": [
+      "Limit intake of staining beverages; use a straw",
+      "Rinse mouth with water after consuming staining foods",
+      "Quit smoking and tobacco use",
+      "Maintain consistent oral hygiene routine",
+      "Regular dental cleanings and polishing"
+    ],
+    "treatment": [
+      "Professional teeth whitening (in-office or take-home)",
+      "Dental polishing to remove surface stains",
+      "Composite bonding for intrinsic stains",
+      "Porcelain veneers for severe discoloration",
+      "Addressing underlying causes (medication changes, fluoride management)"
+    ],
+    "severity": "Mild",
+    "color": "#8B5CF6",
+    "icon": "star"
+  },
+  "Ulcers": {
+    "description": "Oral ulcers (aphthous ulcers or canker sores) are painful, open sores that develop on the mucous membranes inside the mouth. They can appear on the inside of the cheeks, lips, tongue, gums, or throat, causing significant discomfort when eating or speaking.",
+    "symptoms": [
+      "Round or oval white or yellow sores with a red border",
+      "Painful, burning sensation in the mouth",
+      "Difficulty eating, drinking, or speaking",
+      "Swollen lymph nodes in severe cases",
+      "Fever (in complex aphthous ulcers)"
+    ],
+    "causes": [
+      "Minor mouth injuries from dental work or accidental biting",
+      "Stress and anxiety",
+      "Nutritional deficiencies (B12, zinc, folate, iron)",
+      "Hormonal changes during menstrual cycle",
+      "Food sensitivities (citrus, spicy foods)",
+      "Immune system disorders or inflammatory conditions"
+    ],
+    "prevention": [
+      "Avoid foods that trigger outbreaks",
+      "Use a soft-bristled toothbrush",
+      "Manage stress with relaxation techniques",
+      "Ensure adequate nutrition (B vitamins, zinc, iron)",
+      "Maintain good oral hygiene"
+    ],
+    "treatment": [
+      "Topical corticosteroid gels or pastes",
+      "Antiseptic mouthwash (chlorhexidine)",
+      "Pain-relieving topical anesthetics (benzocaine)",
+      "Salt-water rinses to reduce inflammation",
+      "Vitamin supplementation if deficient",
+      "Prescription medication for severe or recurrent cases"
+    ],
+    "severity": "Mild to Moderate",
+    "color": "#F97316",
+    "icon": "shield"
+  },
+  "Hypodontia": {
+    "description": "Hypodontia is the congenital absence of one or more teeth (excluding third molars/wisdom teeth). It is the most common dental developmental anomaly, affecting tooth development during the embryonic stage. It can affect both primary and permanent dentition.",
+    "symptoms": [
+      "Missing teeth with no signs of previous extraction",
+      "Gaps in the dental arch",
+      "Abnormal spacing between existing teeth",
+      "Retained primary (baby) teeth due to missing permanent successors",
+      "Shifted or drifted adjacent teeth"
+    ],
+    "causes": [
+      "Genetic factors (most common cause)",
+      "Evolutionary tooth size and number reduction",
+      "Environmental factors during tooth development",
+      "Ectodermal dysplasia syndrome",
+      "Down syndrome or other chromosomal conditions",
+      "Radiation therapy during childhood"
+    ],
+    "prevention": [
+      "Hypodontia cannot be fully prevented as it is primarily genetic",
+      "Regular dental monitoring from early childhood",
+      "Genetic counseling for families with history",
+      "Protecting remaining teeth from decay and trauma"
+    ],
+    "treatment": [
+      "Dental implants to replace missing teeth",
+      "Dental bridges supported by adjacent teeth",
+      "Removable partial dentures",
+      "Orthodontic treatment to close or manage gaps",
+      "Resin-bonded bridges for younger patients",
+      "Composite resin build-ups on retained primary teeth"
+    ],
+    "severity": "Variable",
+    "color": "#06B6D4",
+    "icon": "info"
+  }
+}

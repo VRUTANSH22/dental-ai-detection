@@ -1,0 +1,39 @@
+# ─── Dependencies ────────────────────────────
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# ─── Environment Files ──────────────────────
+.env
+.env.local
+.env.production
+
+# ─── Build Outputs ──────────────────────────
+frontend/dist/
+*.egg-info/
+
+# ─── Large Files (DO NOT COMMIT) ────────────
+DATASET.zip
+DATASET/
+*.zip
+
+# ─── IDE & OS ────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# ─── Output & Presentations ─────────────────
+output/
+*.pptx
+
+# ─── Jupyter Notebooks (optional) ───────────
+.ipynb_checkpoints/
+
+# ─── Logs ────────────────────────────────────
+*.log
