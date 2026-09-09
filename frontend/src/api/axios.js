@@ -13,7 +13,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // 30s timeout for AI predictions
+  timeout: 45000, // 45s timeout to allow for Render free tier cold starts
 });
 
 /**
@@ -54,22 +54,24 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // ─── Automatic Failover: Render → Localhost ──────────────────────────────
-    // If Render is offline, cold-starting with a timeout, or has a network error,
-    // automatically fallback to the local backend server.
-    const isNetworkError =
+    // If Render is offline, returning 502 Bad Gateway, cold-starting with a timeout,
+    // or has a network error, automatically fallback to the local backend server.
+    const isUnreachable =
       !error.response ||
+      error.response.status === 502 ||
+      error.response.status === 503 ||
       error.code === 'ERR_NETWORK' ||
       error.code === 'ECONNABORTED' ||
       error.message?.includes('Network Error');
 
     if (
-      isNetworkError &&
+      isUnreachable &&
       originalRequest &&
       !originalRequest._fallbackTried &&
       currentBaseURL !== FALLBACK_API_URL
     ) {
       console.warn(
-        `[API Failover] Primary backend (${currentBaseURL}) unreachable. Automatically falling back to local backend (${FALLBACK_API_URL}).`
+        `[API Failover] Primary backend (${currentBaseURL}) returned error (status: ${error.response?.status || error.code}). Automatically trying local backend (${FALLBACK_API_URL}).`
       );
       originalRequest._fallbackTried = true;
       currentBaseURL = FALLBACK_API_URL;
