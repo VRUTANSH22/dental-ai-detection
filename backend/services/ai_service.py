@@ -113,38 +113,61 @@ def load_model() -> None:
     """
     global _model, _class_names, _disease_info
 
-    model_path = settings.model_path_resolved
-    class_mapping_path = settings.class_mapping_path_resolved
-    disease_info_path = settings.disease_info_path_resolved
+    try:
+        model_path = settings.model_path_resolved
+        if not model_path.exists():
+            alt_paths = [
+                Path(__file__).parent.parent / "models" / "efficientnet_b0_dental.pth",
+                Path(__file__).parent.parent.parent / "efficientnet_b0_dental.pth",
+                Path(__file__).parent.parent / "efficientnet_b0_dental.pth",
+            ]
+            for p in alt_paths:
+                if p.exists():
+                    model_path = p
+                    break
 
-    logger.info(f"Loading model from: {model_path}")
-    if not model_path.exists():
-        raise FileNotFoundError(f"Model file not found: {model_path}")
+        class_mapping_path = settings.class_mapping_path_resolved
+        if not class_mapping_path.exists():
+            alt_m = Path(__file__).parent.parent / "models" / "class_mapping.json"
+            if alt_m.exists():
+                class_mapping_path = alt_m
 
-    # Build EfficientNet-B0 architecture
-    model = efficientnet_b0(weights=None)  # No pretrained weights — we load our own
-    num_features = model.classifier[1].in_features
-    model.classifier[1] = nn.Linear(num_features, 6)  # 6 dental disease classes
+        disease_info_path = settings.disease_info_path_resolved
+        if not disease_info_path.exists():
+            alt_d = Path(__file__).parent.parent / "models" / "disease_info.json"
+            if alt_d.exists():
+                disease_info_path = alt_d
 
-    # Load trained state dict
-    state_dict = torch.load(model_path, map_location=_device, weights_only=True)
-    model.load_state_dict(state_dict)
-    model.to(_device)
-    model.eval()
-    _model = model
-    logger.info(f"Model loaded successfully on device: {_device}")
+        logger.info(f"Loading model from: {model_path}")
+        if not model_path.exists():
+            logger.error(f"Model file not found at {model_path}. Prediction endpoint will return 503 until uploaded.")
+            return
 
-    # Load class mapping
-    with open(class_mapping_path, "r") as f:
-        mapping = json.load(f)
-    # Sort by integer key to ensure order matches model output indices
-    _class_names = [mapping[str(i)] for i in range(len(mapping))]
-    logger.info(f"Classes loaded: {_class_names}")
+        # Build EfficientNet-B0 architecture
+        model = efficientnet_b0(weights=None)
+        num_features = model.classifier[1].in_features
+        model.classifier[1] = nn.Linear(num_features, 6)
 
-    # Load disease information
-    with open(disease_info_path, "r") as f:
-        _disease_info = json.load(f)
-    logger.info("Disease information loaded.")
+        # Load trained state dict
+        state_dict = torch.load(model_path, map_location=_device, weights_only=True)
+        model.load_state_dict(state_dict)
+        model.to(_device)
+        model.eval()
+        _model = model
+        logger.info(f"Model loaded successfully on device: {_device}")
+
+        if class_mapping_path.exists():
+            with open(class_mapping_path, "r") as f:
+                mapping = json.load(f)
+            _class_names = [mapping[str(i)] for i in range(len(mapping))]
+            logger.info(f"Classes loaded: {_class_names}")
+
+        if disease_info_path.exists():
+            with open(disease_info_path, "r") as f:
+                _disease_info = json.load(f)
+            logger.info("Disease info loaded successfully.")
+    except Exception as e:
+        logger.error(f"Failed to load ML model on startup: {e}")
 
 
 # ─── Inference ────────────────────────────────────────────────────────────────

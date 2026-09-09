@@ -13,17 +13,20 @@ async def connect_to_mongo() -> None:
     """Create MongoDB connection pool on startup."""
     global _client, _db
     logger.info("Connecting to MongoDB Atlas...")
-    _client = AsyncIOMotorClient(
-        settings.MONGODB_URI,
-        serverSelectionTimeoutMS=5000,
-        maxPoolSize=10,
-        minPoolSize=2,
-    )
-    _db = _client[settings.MONGODB_DB_NAME]
-    # Verify connection
-    await _client.admin.command("ping")
-    logger.info(f"Connected to MongoDB database: {settings.MONGODB_DB_NAME}")
-    await _create_indexes()
+    try:
+        _client = AsyncIOMotorClient(
+            settings.MONGODB_URI,
+            serverSelectionTimeoutMS=5000,
+            maxPoolSize=10,
+            minPoolSize=2,
+        )
+        _db = _client[settings.MONGODB_DB_NAME]
+        # Verify connection
+        await _client.admin.command("ping")
+        logger.info(f"Connected to MongoDB database: {settings.MONGODB_DB_NAME}")
+        await _create_indexes()
+    except Exception as e:
+        logger.error(f"⚠️ MongoDB connection failed on startup: {e}. Verify MONGODB_URI.")
 
 
 async def close_mongo_connection() -> None:
