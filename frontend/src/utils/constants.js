@@ -1,6 +1,6 @@
-/* ─── API Base URLs & Config ────────────────────────────────────────────── */
-
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+export const PRIMARY_API_URL = import.meta.env.VITE_API_URL || 'https://dental-ai-detection-9t1g.onrender.com';
+export const FALLBACK_API_URL = import.meta.env.VITE_FALLBACK_API_URL || 'http://localhost:8000';
+export const API_URL = PRIMARY_API_URL;
 
 /* ─── Disease Classes ───────────────────────────────────────────────────── */
 

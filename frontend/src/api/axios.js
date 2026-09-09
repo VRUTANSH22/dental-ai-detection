@@ -1,12 +1,15 @@
 /**
- * Axios instance with interceptors for JWT auth and token refresh.
- * All API calls use this centralized instance.
+ * Axios instance with interceptors for JWT auth, token refresh,
+ * and automatic failover between Render (primary) and localhost (fallback).
  */
 import axios from 'axios';
-import { API_URL } from '../utils/constants';
+import { PRIMARY_API_URL, FALLBACK_API_URL } from '../utils/constants';
+
+// Start with Render as primary backend; failover to localhost if Render is unreachable
+let currentBaseURL = PRIMARY_API_URL;
 
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: `${currentBaseURL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,10 +17,11 @@ const api = axios.create({
 });
 
 /**
- * Request interceptor — attach access token to every request.
+ * Request interceptor — ensure active baseURL and attach JWT token.
  */
 api.interceptors.request.use(
   (config) => {
+    config.baseURL = `${currentBaseURL}/api`;
     const token = localStorage.getItem('access_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -28,7 +32,7 @@ api.interceptors.request.use(
 );
 
 /**
- * Response interceptor — handle 401 errors with token refresh.
+ * Response interceptor — handle failover and 401 token refresh.
  */
 let isRefreshing = false;
 let failedQueue = [];
@@ -49,7 +53,32 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Skip refresh for auth endpoints
+    // ─── Automatic Failover: Render → Localhost ──────────────────────────────
+    // If Render is offline, cold-starting with a timeout, or has a network error,
+    // automatically fallback to the local backend server.
+    const isNetworkError =
+      !error.response ||
+      error.code === 'ERR_NETWORK' ||
+      error.code === 'ECONNABORTED' ||
+      error.message?.includes('Network Error');
+
+    if (
+      isNetworkError &&
+      originalRequest &&
+      !originalRequest._fallbackTried &&
+      currentBaseURL !== FALLBACK_API_URL
+    ) {
+      console.warn(
+        `[API Failover] Primary backend (${currentBaseURL}) unreachable. Automatically falling back to local backend (${FALLBACK_API_URL}).`
+      );
+      originalRequest._fallbackTried = true;
+      currentBaseURL = FALLBACK_API_URL;
+      api.defaults.baseURL = `${FALLBACK_API_URL}/api`;
+      originalRequest.baseURL = `${FALLBACK_API_URL}/api`;
+      return api(originalRequest);
+    }
+
+    // ─── Token Refresh: 401 Unauthorized ─────────────────────────────────────
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
@@ -82,7 +111,7 @@ api.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post(`${API_URL}/api/auth/refresh`, {
+        const { data } = await axios.post(`${currentBaseURL}/api/auth/refresh`, {
           refresh_token: refreshToken,
         });
 
@@ -110,4 +139,5 @@ api.interceptors.response.use(
   }
 );
 
+export const getCurrentBackendUrl = () => currentBaseURL;
 export default api;
