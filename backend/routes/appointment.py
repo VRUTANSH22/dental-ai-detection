@@ -77,7 +77,7 @@ async def book_appointment(
         logger.warning(f"Appointment email failed: {e}")
 
     appt_doc["id"] = str(result.inserted_id)
-    del appt_doc["_id"] if "_id" in appt_doc else None
+    appt_doc.pop("_id", None)
     return appt_doc
 
 
