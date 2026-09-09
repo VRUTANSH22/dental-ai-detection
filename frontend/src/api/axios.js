@@ -53,9 +53,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // ─── Automatic Failover: Render → Localhost ──────────────────────────────
-    // If Render is offline, returning 502 Bad Gateway, cold-starting with a timeout,
-    // or has a network error, automatically fallback to the local backend server.
+    // ─── Failover & Retry Logic ─────────────────────────────────────────────
+    const isLocalDevelopment =
+      typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
     const isUnreachable =
       !error.response ||
       error.response.status === 502 ||
@@ -64,19 +66,34 @@ api.interceptors.response.use(
       error.code === 'ECONNABORTED' ||
       error.message?.includes('Network Error');
 
+    // On local machine (localhost:5173), fallback to local backend (localhost:8000)
     if (
+      isLocalDevelopment &&
       isUnreachable &&
       originalRequest &&
       !originalRequest._fallbackTried &&
       currentBaseURL !== FALLBACK_API_URL
     ) {
       console.warn(
-        `[API Failover] Primary backend (${currentBaseURL}) returned error (status: ${error.response?.status || error.code}). Automatically trying local backend (${FALLBACK_API_URL}).`
+        `[API Failover] Primary backend (${currentBaseURL}) unreachable. Automatically trying local backend (${FALLBACK_API_URL}).`
       );
       originalRequest._fallbackTried = true;
       currentBaseURL = FALLBACK_API_URL;
       api.defaults.baseURL = `${FALLBACK_API_URL}/api`;
       originalRequest.baseURL = `${FALLBACK_API_URL}/api`;
+      return api(originalRequest);
+    }
+
+    // On production (Vercel), retry Render once in case of cold start
+    if (
+      !isLocalDevelopment &&
+      isUnreachable &&
+      originalRequest &&
+      !originalRequest._retryCount
+    ) {
+      originalRequest._retryCount = 1;
+      console.warn(`[API] Render backend cold-starting or temporarily busy. Retrying...`);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return api(originalRequest);
     }
 
