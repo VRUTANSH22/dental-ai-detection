@@ -51,12 +51,15 @@ class Settings(BaseSettings):
     SMTP_FROM_NAME: str = "Dental AI System"
 
     # CORS
-    FRONTEND_URL: str = "http://localhost:5173"
-    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
+    FRONTEND_URL: str = "https://dental-ai-detection-final.vercel.app"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000,https://dental-ai-detection-final.vercel.app,https://dental-ai-detection.vercel.app"
 
     @property
     def allowed_origins_list(self) -> List[str]:
-        return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]
+        origins = [o.strip() for o in self.ALLOWED_ORIGINS.split(",") if o.strip()]
+        if self.FRONTEND_URL and self.FRONTEND_URL not in origins:
+            origins.append(self.FRONTEND_URL.strip())
+        return origins
 
     # Model paths (resolved relative to backend root)
     MODEL_PATH: str = "../models/efficientnet_b0_dental.pth"
