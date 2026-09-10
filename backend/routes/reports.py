@@ -59,11 +59,13 @@ async def download_report_pdf(
         "report_id": report_id,
         "patient": {
             "id": pred["patient_id"],
-            "name": patient_user.get("full_name", "—"),
-            "email": patient_user.get("email", "—"),
-            "age": patient_user.get("age", "—"),
-            "gender": patient_user.get("gender", "—"),
-            "phone": patient_user.get("phone", "—"),
+            # Optional profile fields are stored as None for many users.
+            # ReportLab Paragraph expects text, not None.
+            "name": patient_user.get("full_name") or "—",
+            "email": patient_user.get("email") or "—",
+            "age": patient_user.get("age") or "—",
+            "gender": patient_user.get("gender") or "—",
+            "phone": patient_user.get("phone") or "—",
         },
         "prediction": {
             "predicted_class": pred.get("predicted_class", "Unknown"),
@@ -84,8 +86,8 @@ async def download_report_pdf(
             report_data=report_data,
             gradcam_overlay_b64=pred.get("gradcam_overlay_base64"),
         )
-    except Exception as e:
-        logger.error(f"PDF generation failed: {e}")
+    except Exception:
+        logger.exception("PDF generation failed")
         raise HTTPException(
             status_code=500,
             detail="Failed to generate PDF report. Please try again."

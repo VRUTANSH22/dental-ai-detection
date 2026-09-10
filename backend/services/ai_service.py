@@ -148,8 +148,11 @@ def load_model() -> None:
         num_features = model.classifier[1].in_features
         model.classifier[1] = nn.Linear(num_features, 6)
 
-        # Load trained state dict
-        state_dict = torch.load(model_path, map_location=_device, weights_only=True)
+        # Training saves a checkpoint containing metadata and the actual weights
+        # under ``state_dict``.  Accept a raw state dict too, so either export
+        # format can be used for local inference.
+        checkpoint = torch.load(model_path, map_location=_device, weights_only=True)
+        state_dict = checkpoint.get("state_dict", checkpoint) if isinstance(checkpoint, dict) else checkpoint
         model.load_state_dict(state_dict)
         model.to(_device)
         model.eval()

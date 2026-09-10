@@ -86,6 +86,19 @@ class Settings(BaseSettings):
     RATE_LIMIT_PREDICT: str = "5/minute"
     RATE_LIMIT_GENERAL: str = "100/minute"
 
+    @field_validator("DEBUG", mode="before")
+    @classmethod
+    def parse_debug_value(cls, value: object) -> bool:
+        """Tolerate a host-level ``DEBUG=release`` environment variable.
+
+        Some Windows development environments define DEBUG as a text label.
+        Pydantic only accepts boolean strings for the application's DEBUG
+        setting, which otherwise prevents the API from starting at all.
+        """
+        if isinstance(value, str) and value.strip().lower() in {"release", "production", "prod"}:
+            return False
+        return value
+
 
 # Singleton settings instance
 settings = Settings()
