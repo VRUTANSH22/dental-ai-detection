@@ -6,24 +6,27 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from config.settings import settings
-
-# Password hashing context — bcrypt with 12 rounds
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 
 # ─── Password Utilities ────────────────────────────────────────────────────────
 
 def hash_password(plain_password: str) -> str:
-    """Hash a plain-text password using bcrypt."""
-    return pwd_context.hash(plain_password)
+    """Hash a plain-text password using native bcrypt with 12 rounds."""
+    salt = bcrypt.gensalt(rounds=12)
+    pwd_bytes = plain_password.encode("utf-8")[:72]
+    return bcrypt.hashpw(pwd_bytes, salt).decode("utf-8")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain-text password against its bcrypt hash."""
-    return pwd_context.verify(plain_password, hashed_password)
+    pwd_bytes = plain_password.encode("utf-8")[:72]
+    try:
+        return bcrypt.checkpw(pwd_bytes, hashed_password.encode("utf-8"))
+    except Exception:
+        return False
 
 
 # ─── JWT Utilities ─────────────────────────────────────────────────────────────
