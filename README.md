@@ -1,4 +1,4 @@
-# ?? AI-Based Dental Disease Detection System
+#  AI-Based Dental Disease Detection System
 
 > An end-to-end, production-ready web application that uses deep learning to detect dental diseases from X-ray / oral images, generates Grad-CAM heatmaps for explainability, and provides a full doctor-review & appointment workflow.
 
@@ -11,7 +11,7 @@
 
 ---
 
-## ?? Table of Contents
+##  Table of Contents
 
 - [Overview](#-overview)
 - [Key Features](#-key-features)
@@ -27,9 +27,9 @@
 
 ---
 
-## ?? Overview
+##  Overview
 
-This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application for dental disease detection. The system allows patients to upload dental images, which are analyzed by an **EfficientNet-B0** deep learning model trained on a custom dental disease dataset. Results include:
+This is my **Semester 7 Major Project (MP-1)** â€” a full-stack AI web application for dental disease detection. The system allows patients to upload dental images, which are analyzed by an **EfficientNet-B0** deep learning model trained on a custom dental disease dataset. Results include:
 
 - **Disease classification** with confidence scores
 - **Grad-CAM heatmap** overlaid on the original image (explainable AI)
@@ -40,7 +40,7 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ? Key Features
+##  Key Features
 
 | Feature | Description |
 |---|---|
@@ -59,7 +59,7 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ?? Tech Stack
+##  Tech Stack
 
 ### Backend
 | Layer | Technology |
@@ -88,18 +88,18 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ?? System Architecture
+##  System Architecture
 
 ```
 +------------------------------------------------------------------+
 |                        User Browser                               |
-|   React SPA (Vite) — Hosted on Vercel                           |
+|   React SPA (Vite) â€” Hosted on Vercel                           |
 |   Routes: /, /predict, /dashboard/*, /diseases, /about          |
 +---------------------------+--------------------------------------+
                             |  HTTPS (Axios + smart retry)
                             v
 +------------------------------------------------------------------+
-|              FastAPI Backend — Hosted on Render                   |
+|              FastAPI Backend â€” Hosted on Render                   |
 |                                                                   |
 |  +------------+  +-------------+  +---------------+             |
 |  | Auth API   |  | Predict API |  | Appointment   |             |
@@ -126,7 +126,7 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ?? AI Model — EfficientNet-B0
+##  AI Model â€” EfficientNet-B0
 
 - **Architecture:** EfficientNet-B0 (pre-trained on ImageNet, fine-tuned on dental dataset)
 - **Input:** 224x224 RGB dental images
@@ -147,9 +147,9 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ?? User Roles
+##  User Roles
 
-### ?? Patient
+###  Patient
 - Register / Login / Google OAuth
 - Upload dental images for AI analysis
 - View predictions with Grad-CAM heatmaps
@@ -163,7 +163,7 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 - Manage appointment requests (approve/reject/reschedule)
 - View patient history
 
-### ?? Admin
+###  Admin
 - Manage all users (promote/demote roles)
 - View all predictions across the system
 - Read contact/support messages
@@ -171,59 +171,59 @@ This is my **Semester 7 Major Project (MP-1)** — a full-stack AI web application
 
 ---
 
-## ?? Project Structure
+##  Project Structure
 
 ```
 MP1/
 +-- backend/                      # FastAPI Python backend
-¦   +-- main.py                   # App entry point, middleware, lifespan
-¦   +-- config/
-¦   ¦   +-- settings.py           # Pydantic settings (env vars)
-¦   +-- database/
-¦   ¦   +-- mongodb.py            # MongoDB connection (Motor async)
-¦   +-- models/                   # Pydantic data models
-¦   +-- routes/                   # API route definitions
-¦   ¦   +-- auth.py               # Register, login, OAuth, tokens
-¦   ¦   +-- prediction.py         # AI inference endpoint
-¦   ¦   +-- patient.py            # Patient profile & history
-¦   ¦   +-- doctor.py             # Doctor review endpoints
-¦   ¦   +-- admin.py              # Admin management
-¦   ¦   +-- appointment.py        # Appointment CRUD
-¦   ¦   +-- reports.py            # PDF generation
-¦   ¦   +-- contact.py            # Contact form
-¦   +-- services/
-¦   ¦   +-- ai_service.py         # EfficientNet-B0 + Grad-CAM inference
-¦   ¦   +-- cloudinary_service.py # Image upload/retrieval
-¦   ¦   +-- email_service.py      # Verification & notification emails
-¦   ¦   +-- pdf_service.py        # ReportLab PDF generation
-¦   +-- utils/
-¦   ¦   +-- security.py           # JWT + bcrypt password hashing
-¦   +-- requirements.txt
-¦
+Â¦   +-- main.py                   # App entry point, middleware, lifespan
+Â¦   +-- config/
+Â¦   Â¦   +-- settings.py           # Pydantic settings (env vars)
+Â¦   +-- database/
+Â¦   Â¦   +-- mongodb.py            # MongoDB connection (Motor async)
+Â¦   +-- models/                   # Pydantic data models
+Â¦   +-- routes/                   # API route definitions
+Â¦   Â¦   +-- auth.py               # Register, login, OAuth, tokens
+Â¦   Â¦   +-- prediction.py         # AI inference endpoint
+Â¦   Â¦   +-- patient.py            # Patient profile & history
+Â¦   Â¦   +-- doctor.py             # Doctor review endpoints
+Â¦   Â¦   +-- admin.py              # Admin management
+Â¦   Â¦   +-- appointment.py        # Appointment CRUD
+Â¦   Â¦   +-- reports.py            # PDF generation
+Â¦   Â¦   +-- contact.py            # Contact form
+Â¦   +-- services/
+Â¦   Â¦   +-- ai_service.py         # EfficientNet-B0 + Grad-CAM inference
+Â¦   Â¦   +-- cloudinary_service.py # Image upload/retrieval
+Â¦   Â¦   +-- email_service.py      # Verification & notification emails
+Â¦   Â¦   +-- pdf_service.py        # ReportLab PDF generation
+Â¦   +-- utils/
+Â¦   Â¦   +-- security.py           # JWT + bcrypt password hashing
+Â¦   +-- requirements.txt
+Â¦
 +-- frontend/                     # React + Vite frontend
-¦   +-- src/
-¦   ¦   +-- App.jsx               # Route definitions (lazy-loaded)
-¦   ¦   +-- api/
-¦   ¦   ¦   +-- axios.js          # Axios client with failover logic
-¦   ¦   +-- context/
-¦   ¦   ¦   +-- AuthContext.jsx   # Global auth state
-¦   ¦   +-- pages/
-¦   ¦   ¦   +-- Home.jsx
-¦   ¦   ¦   +-- Predict.jsx       # Image upload & AI trigger
-¦   ¦   ¦   +-- PredictionResult.jsx  # Grad-CAM + results view
-¦   ¦   ¦   +-- Diseases.jsx      # Disease information page
-¦   ¦   ¦   +-- dashboard/
-¦   ¦   ¦       +-- patient/      # Patient dashboard pages
-¦   ¦   ¦       +-- doctor/       # Doctor dashboard pages
-¦   ¦   ¦       +-- admin/        # Admin dashboard pages
-¦   ¦   +-- index.css             # Global styles & design system
-¦   +-- vercel.json               # Vercel SPA routing config
-¦
+Â¦   +-- src/
+Â¦   Â¦   +-- App.jsx               # Route definitions (lazy-loaded)
+Â¦   Â¦   +-- api/
+Â¦   Â¦   Â¦   +-- axios.js          # Axios client with failover logic
+Â¦   Â¦   +-- context/
+Â¦   Â¦   Â¦   +-- AuthContext.jsx   # Global auth state
+Â¦   Â¦   +-- pages/
+Â¦   Â¦   Â¦   +-- Home.jsx
+Â¦   Â¦   Â¦   +-- Predict.jsx       # Image upload & AI trigger
+Â¦   Â¦   Â¦   +-- PredictionResult.jsx  # Grad-CAM + results view
+Â¦   Â¦   Â¦   +-- Diseases.jsx      # Disease information page
+Â¦   Â¦   Â¦   +-- dashboard/
+Â¦   Â¦   Â¦       +-- patient/      # Patient dashboard pages
+Â¦   Â¦   Â¦       +-- doctor/       # Doctor dashboard pages
+Â¦   Â¦   Â¦       +-- admin/        # Admin dashboard pages
+Â¦   Â¦   +-- index.css             # Global styles & design system
+Â¦   +-- vercel.json               # Vercel SPA routing config
+Â¦
 +-- models/                       # ML model files
-¦   +-- efficientnet_b0_dental.pth
-¦   +-- class_mapping.json
-¦   +-- disease_info.json
-¦
+Â¦   +-- efficientnet_b0_dental.pth
+Â¦   +-- class_mapping.json
+Â¦   +-- disease_info.json
+Â¦
 +-- dental_diseases.ipynb         # Model training notebook
 +-- vercel.json                   # Root Vercel config (forces Vite build)
 +-- Procfile                      # Render deployment command
@@ -271,7 +271,7 @@ npm run dev
 
 ---
 
-## ?? Environment Variables
+##  Environment Variables
 
 ### Backend (`backend/.env`)
 
@@ -279,7 +279,7 @@ npm run dev
 APP_ENV=development
 DEBUG=True
 
-# REQUIRED — generate with: python -c "import secrets; print(secrets.token_hex(64))"
+# REQUIRED â€” generate with: python -c "import secrets; print(secrets.token_hex(64))"
 JWT_SECRET_KEY=your_very_long_random_secret_key_here
 
 # MongoDB Atlas connection string
@@ -361,7 +361,7 @@ VITE_FALLBACK_API_URL=http://localhost:8000
 
 ## ?? Academic Context
 
-**Minor Project 1 (MP-1) — Semester 7, B.Tech Computer Engineering**
+**Minor Project 1 (MP-1) â€” Semester 7, B.Tech Computer Engineering**
 
 - **Domain:** Artificial Intelligence + Healthcare
 - **Core Technique:** Transfer Learning (EfficientNet-B0), Grad-CAM Explainability
@@ -370,14 +370,14 @@ VITE_FALLBACK_API_URL=http://localhost:8000
 
 ---
 
-## ????? Author
+##  Author
 
-**Vrutansh** — B.Tech Computer Engineering, Semester 7
+**Vrutansh** â€” B.Tech Computer Engineering, Semester 7
 
 GitHub: [@VRUTANSH22](https://github.com/VRUTANSH22)
 
 ---
 
-## ?? License
+##  License
 
-This project is for academic purposes. All rights reserved © 2024 Vrutansh.
+This project is for academic purposes. All rights reserved Â© 2024 Vrutansh.
