@@ -381,3 +381,24 @@ GitHub: [@VRUTANSH22](https://github.com/VRUTANSH22)
 ##  License
 
 This project is for academic purposes. All rights reserved Â© 2024 Vrutansh.
+
+---
+
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home.png)
+
+### AI Prediction - Upload Image
+![AI Prediction Upload](screenshots/predict.png)
+
+### Prediction Result with Grad-CAM Heatmap
+> Detected **Gingivitis** with **99.1% confidence** — the Grad-CAM overlay highlights exactly which part of the tooth triggered the prediction.
+
+![Prediction Result with Grad-CAM](screenshots/prediction_result.png)
+
+### Patient Dashboard
+![Patient Dashboard](screenshots/patient_dashboard.png)
+
+### Auto-Generated PDF Report
+![PDF Report](screenshots/pdf_report.png)
